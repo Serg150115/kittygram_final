@@ -1,51 +1,35 @@
-### Как запустить проект:
+# Kittygram
 
-Клонировать репозиторий и перейти в него в командной строке:
+Сайт-блог для публикации ваши котов и их достижений.
 
-```
-git clone https://github.com/yandex-praktikum/kittygram_backend.git
-```
+## Установка
 
-```
-cd kittygram_backend
-```
+Скачиваем файл docker-compose.production.yml в отдельную новую папку
 
-Cоздать и активировать виртуальное окружение:
+Запускаем файл в папке проекта
 
-```
-python3 -m venv env
+```bash
+sudo docker compose -f docker-compose.production.yml up
 ```
 
-* Если у вас Linux/macOS
+Выполняем миграции и собираем статические файлы
 
-    ```
-    source env/bin/activate
-    ```
-
-* Если у вас windows
-
-    ```
-    source env/scripts/activate
-    ```
-
-```
-python3 -m pip install --upgrade pip
+```bash
+sudo docker compose -f docker-compose.production.yml exec backend python manage.py migrate
+sudo docker compose -f docker-compose.production.yml exec backend python manage.py collectstatic
+sudo docker compose -f docker-compose.production.yml exec backend cp -r /app/collected_static/. /static/static/
 ```
 
-Установить зависимости из файла requirements.txt:
+После запуска проект будет доступен по локальному адресу:
 
-```
-pip install -r requirements.txt
-```
+http://localhost:9000/
 
-Выполнить миграции:
+## Использование
 
-```
-python3 manage.py migrate
-```
+Для использования приложения необходимо зарегистрироваться и войти на сайт.
 
-Запустить проект:
+Для добавления кота в правом в верхнем углу после входа появится соответствующая кнопка.
 
-```
-python3 manage.py runserver
-```
+Можно загрузит фото кота и указать его имя, год рождения и достижения.
+
+Достижения кота можно выбирать из существующего списка или создать новые.
